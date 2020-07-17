@@ -48,6 +48,12 @@ main () {
   shasums_filename="SHASUMS256.asc"
   shasums_filepath="${temp_dir}/${shasums_filename}"
 
+  key_data=$(gpg --list-keys "${pgp_key}" | sed -e '/^$/,$d')
+
+  echo "Using the following key:"
+  echo "${key_data}"
+
+  echo
   echo "Building release archives for ${tag}..."
   echo "Building ${archive_name}.tar.gz..."
   git archive --format=tar.gz -o "${temp_dir}/${archive_name}.tar.gz" "${tag}"
@@ -55,8 +61,7 @@ main () {
   git archive --format=zip -o "${temp_dir}/${archive_name}.zip" "${tag}"
   echo "Calculating shasums..."
   shasums="$(cd "${temp_dir}" && shasum --algorithm 256 *)"
-  echo "Signing shasums with the following key:"
-  gpg --list-keys "${pgp_key}" | sed -e '/^$/,$d'
+  echo "Signing shasums..."
   export GPG_TTY=$(tty)
   signed_shasums=$(echo "${shasums}" | gpg --clearsign --local-user "${pgp_key}" > $shasums_filepath)
   echo "Done!"
