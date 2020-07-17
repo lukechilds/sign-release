@@ -40,12 +40,28 @@ main () {
   pgp_key=$2
 
   repo=$(basename $(git rev-parse --show-toplevel))
+  archive_name="${repo}-${tag}"
 
   temp_dir="$(mktemp -d)"
+  shasums_filename="SHASUMS256.txt.asc"
+  shasums_filepath="${temp_dir}/${shasums_filename}"
 
-  github_name="${repo}-${tag#"v"}"
-  git archive --format=tar.gz -o "${temp_dir}/${github_name}.tar.gz" "${tag}"
-  git archive --format=zip -o "${temp_dir}/${github_name}.zip" "${tag}"
+  echo "Building release archives for ${tag}..."
+  echo "Building ${archive_name}.tar.gz..."
+  git archive --format=tar.gz -o "${temp_dir}/${archive_name}.tar.gz" "${tag}"
+  echo "Building ${archive_name}.zip..."
+  git archive --format=zip -o "${temp_dir}/${archive_name}.zip" "${tag}"
+  echo "Calculating shasums..."
+  shasums="$(cd "${temp_dir}" && shasum --algorithm 256 *)"
+  echo "Signing shasums with key \"${pgp_key}\"..."
+  export GPG_TTY=$(tty)
+  signed_shasums=$(echo "${shasums}" | gpg --clearsign --local-user "${pgp_key}" > $shasums_filepath)
+  echo "Done!"
+  echo
+  echo "Release assets at:"
+  echo "${temp_dir}"
+  echo
+  cat "${shasums_filepath}"
 }
 
 main $@
