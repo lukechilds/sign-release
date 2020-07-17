@@ -28,7 +28,7 @@ check_dependencies () {
 
 main () {
   # Check deps before running any commands
-  check_dependencies
+  check_dependencies git gpg
 
   # Make sure params are set
   if [[ -z ${1+x} ]] || [[ -z ${2+x} ]]; then
