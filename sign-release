@@ -3,17 +3,17 @@ set -euo pipefail
 
 show_help() {
   cat << EOF
-signrelease 0.0.0
+sign-release 0.0.0
 
 Easy automated release signing.
 
-Usage: signrelease <git-tag> <pgp-key>
+Usage: sign-release <git-tag> <pgp-key>
 
 Examples:
-    signrelease v0.1.2 Umbrel
-    signrelease v0.1.2 pgp@getumbrel.com
+    sign-release v0.1.2 Umbrel
+    sign-release v0.1.3-beta pgp@getumbrel.com
 
-GitHub: https://github.com/lukechilds/signrelease
+GitHub: https://github.com/lukechilds/sign-release
 EOF
 }
 
@@ -42,7 +42,7 @@ main () {
   repo=$(basename $(git rev-parse --show-toplevel))
   archive_name="${repo}-${tag}"
 
-  temp_dir="/tmp/signrelease/$(date +%s)-${RANDOM}-${archive_name}"
+  temp_dir="/tmp/sign-release/$(date +%s)-${RANDOM}-${archive_name}"
   mkdir -p "${temp_dir}"
 
   shasums_filename="SHASUMS256.asc"

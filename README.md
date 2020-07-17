@@ -1,4 +1,4 @@
-# signrelease
+# sign-release
 
 Easy automated release signing.
 
@@ -7,36 +7,36 @@ Easy automated release signing.
 ### Homebrew
 
 ```
-brew install lukechilds/tap/signrelease
+brew install lukechilds/tap/sign-release
 ```
 
 ### Git
 
 ```
-git clone https://github.com/lukechilds/signrelease.git ~/.signrelease
+git clone https://github.com/lukechilds/sign-release.git ~/.sign-release
 ```
 
 Then add to your shell profile:
 
 ```shell
-export PATH="$PATH:$HOME/.signrelease/bin"
+export PATH="$PATH:$HOME/.sign-release/bin"
 ```
 
 ## Usage
 
 ```
-$ signrelease
-signrelease 0.0.0
+$ sign-release
+sign-release 0.0.0
 
 Easy automated release signing.
 
-Usage: signrelease <git-tag> <pgp-key>
+Usage: sign-release <git-tag> <pgp-key>
 
 Examples:
-    signrelease v0.1.2 Umbrel
-    signrelease v0.1.3-beta pgp@getumbrel.com
+    sign-release v0.1.2 Umbrel
+    sign-release v0.1.3-beta pgp@getumbrel.com
 
-GitHub: https://github.com/lukechilds/signrelease
+GitHub: https://github.com/lukechilds/sign-release
 ```
 
 ## Example
@@ -44,7 +44,7 @@ GitHub: https://github.com/lukechilds/signrelease
 ```
 umbrel $ git tag v0.1.3-beta
 
-umbrel $ signrelease v0.1.3-beta pgp@getumbrel.com
+umbrel $ sign-release v0.1.3-beta pgp@getumbrel.com
 Using the following key:
 pub   rsa2048 2020-07-17 [SC] [expires: 2022-07-17]
       63BEF6269923AF3AA19DD1D3F445BE6C381EC0C0
@@ -59,7 +59,7 @@ Signing shasums...
 Done!
 
 Release assets at:
-/tmp/signrelease/1594999454-12893-umbrel-v0.1.3-beta
+/tmp/sign-release/1594999454-12893-umbrel-v0.1.3-beta
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
@@ -78,7 +78,7 @@ EgRhCs9iGCmhRtuOS5eF+mtKfl9FUs7wtKkuxQmP2MM/drzLYJjLME8=
 =VsKf
 -----END PGP SIGNATURE-----
 
-umbrel $ ls /tmp/signrelease/1594999454-12893-umbrel-v0.1.3-beta
+umbrel $ ls /tmp/sign-release/1594999454-12893-umbrel-v0.1.3-beta
 SHASUMS256.asc
 umbrel-v0.1.3-beta.tar.gz
 umbrel-v0.1.3-beta.zip
