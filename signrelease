@@ -7,7 +7,7 @@ signrelease 0.0.0
 
 Easy automated release signing.
 
-Usage: signrelease <tag> <pgpkey>
+Usage: signrelease <git-tag> <pgp-key>
 
 Examples:
     signrelease v0.1.2 Umbrel
