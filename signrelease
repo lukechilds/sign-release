@@ -7,13 +7,11 @@ signrelease 0.0.0
 
 Easy automated release signing.
 
-Usage: signrelease <repo>[:tag] <pgpkey>
+Usage: signrelease <tag> <pgpkey>
 
 Examples:
-    signrelease getumbrel/umbrel Umbrel
-    signrelease getumbrel/umbrel pgp@getumbrel.com
-    signrelease getumbrel/umbrel:latest Umbrel
-    signrelease getumbrel/umbrel:v0.1.2 Umbrel
+    signrelease v0.1.2 Umbrel
+    signrelease v0.1.2 pgp@getumbrel.com
 
 GitHub: https://github.com/lukechilds/signrelease
 EOF
@@ -28,18 +26,6 @@ check_dependencies () {
   done
 }
 
-# Parses user/repo or user/repo:tag into GitHub release url
-get_release_url () {
-  repo="$(echo ${1} | cut -d ':' -f 1)"
-  if [[ "${1}" == *":"* ]]; then
-    tag="$(echo ${1} | cut -d ':' -f 2)"
-  else
-    tag="latest"
-  fi
-
-  echo "https://api.github.com/repos/${repo}/releases/${tag}"
-}
-
 main () {
   # Check deps before running any commands
   check_dependencies
@@ -50,10 +36,16 @@ main () {
     exit 1
   fi
 
-  repo=$1
+  tag=$1
   pgp_key=$2
 
-  release_url=$(get_release_url $repo)
+  repo=$(basename $(git rev-parse --show-toplevel))
+
+  temp_dir="$(mktemp -d)"
+
+  github_name="${repo}-${tag#"v"}"
+  git archive --format=tar.gz -o "${temp_dir}/${github_name}.tar.gz" "${tag}"
+  git archive --format=zip -o "${temp_dir}/${github_name}.zip" "${tag}"
 }
 
 main $@
