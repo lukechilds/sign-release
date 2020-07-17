@@ -28,10 +28,32 @@ check_dependencies () {
   done
 }
 
-# Check deps before running any commands
-check_dependencies
+# Parses user/repo or user/repo:tag into GitHub release url
+get_release_url () {
+  repo="$(echo ${1} | cut -d ':' -f 1)"
+  if [[ "${1}" == *":"* ]]; then
+    tag="$(echo ${1} | cut -d ':' -f 2)"
+  else
+    tag="latest"
+  fi
 
-# If we get here it means no valid params were supplied
-# Show help and exit
-show_help
-exit 1
+  echo "https://api.github.com/repos/${repo}/releases/${tag}"
+}
+
+main () {
+  # Check deps before running any commands
+  check_dependencies
+
+  # Make sure params are set
+  if [[ -z ${1+x} ]] || [[ -z ${2+x} ]]; then
+    show_help
+    exit 1
+  fi
+
+  repo=$1
+  pgp_key=$2
+
+  release_url=$(get_release_url $repo)
+}
+
+main $@
