@@ -34,7 +34,7 @@ Usage: signrelease <git-tag> <pgp-key>
 
 Examples:
     signrelease v0.1.2 Umbrel
-    signrelease v0.1.2 pgp@getumbrel.com
+    signrelease v0.1.3-beta pgp@getumbrel.com
 
 GitHub: https://github.com/lukechilds/signrelease
 ```
