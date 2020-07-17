@@ -55,7 +55,8 @@ main () {
   git archive --format=zip -o "${temp_dir}/${archive_name}.zip" "${tag}"
   echo "Calculating shasums..."
   shasums="$(cd "${temp_dir}" && shasum --algorithm 256 *)"
-  echo "Signing shasums with key \"${pgp_key}\"..."
+  echo "Signing shasums with the following key:"
+  gpg --list-keys "${pgp_key}" | sed -e '/^$/,$d'
   export GPG_TTY=$(tty)
   signed_shasums=$(echo "${shasums}" | gpg --clearsign --local-user "${pgp_key}" > $shasums_filepath)
   echo "Done!"
