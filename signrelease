@@ -42,7 +42,9 @@ main () {
   repo=$(basename $(git rev-parse --show-toplevel))
   archive_name="${repo}-${tag}"
 
-  temp_dir="$(mktemp -d)"
+  temp_dir="/tmp/signrelease/$(date +%s)-${RANDOM}-${archive_name}"
+  mkdir -p "${temp_dir}"
+
   shasums_filename="SHASUMS256.asc"
   shasums_filepath="${temp_dir}/${shasums_filename}"
 
