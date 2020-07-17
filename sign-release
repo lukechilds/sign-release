@@ -3,7 +3,7 @@ set -euo pipefail
 
 show_help() {
   cat << EOF
-sign-release 0.0.0
+sign-release 0.1.0
 
 Easy automated release signing.
 

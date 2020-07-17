@@ -29,7 +29,7 @@ export PATH="$PATH:$HOME/.sign-release/bin"
 
 ```
 $ sign-release
-sign-release 0.0.0
+sign-release 0.1.0
 
 Easy automated release signing.
 
