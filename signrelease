@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+show_help() {
+  cat << EOF
+signrelease 0.0.0
+
+Easy automated release signing.
+
+Usage: signrelease <repo>[:tag] <pgpkey>
+
+Examples:
+    signrelease getumbrel/umbrel Umbrel
+    signrelease getumbrel/umbrel pgp@getumbrel.com
+    signrelease getumbrel/umbrel:latest Umbrel
+    signrelease getumbrel/umbrel:v0.1.2 Umbrel
+
+GitHub: https://github.com/lukechilds/signrelease
+EOF
+}
+
+check_dependencies () {
+  for cmd in "$@"; do
+    if ! command -v $cmd >/dev/null 2>&1; then
+      log "This script requires \"${cmd}\" to be installed"
+      exit 1
+    fi
+  done
+}
+
+# Check deps before running any commands
+check_dependencies
+
+# If we get here it means no valid params were supplied
+# Show help and exit
+show_help
+exit 1
