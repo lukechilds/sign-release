@@ -43,7 +43,7 @@ main () {
   archive_name="${repo}-${tag}"
 
   temp_dir="$(mktemp -d)"
-  shasums_filename="SHASUMS256.txt.asc"
+  shasums_filename="SHASUMS256.asc"
   shasums_filepath="${temp_dir}/${shasums_filename}"
 
   echo "Building release archives for ${tag}..."
