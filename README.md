@@ -1,6 +1,9 @@
 # sign-release
 
-Easy automated release signing.
+> Easy automated release signing.
+
+Run `sign-release <git-tag> <pgp-key>` inside a git repo and a temporary
+directory will be created containing release archives and a signed shasum file.
 
 ## Install
 
